@@ -126,7 +126,6 @@ function drawTable(rows) {
 }
 
 function drawChart() {
-    console.log(Papa.parse)
     const data = new google.visualization.DataTable();
 
     data.addColumn('string', 'Task ID');
