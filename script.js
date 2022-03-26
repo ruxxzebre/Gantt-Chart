@@ -1,3 +1,33 @@
+// $("#inputfile").on('change', () => {
+//     $("#inputfile").parse({
+//         config: {
+//             header: true,
+//             encoding: 'utf-8',
+//             complete: function (...args) {
+//                 console.log(args);
+//             }
+//         },
+//         before: function(file, inputElem)
+//         {
+//             // executed before parsing each file begins;
+//             // what you return here controls the flow
+//             console.log(file);
+//         },
+//         error: function(err, file, inputElem, reason)
+//         {
+//             console.log("ERROR");
+//             console.log(err);
+//             // executed if an error occurs while loading the file,
+//             // or if before callback aborted for some reason
+//         },
+//         complete: function()
+//         {
+//             console.log("DONE");
+//             // executed after all files are complete
+//         }
+//     });
+// });
+
 google.charts.load('current', {'packages':['gantt']});
 google.charts.setOnLoadCallback(drawChart);
 
@@ -37,7 +67,7 @@ function getDuration(start, end, toMs = false) {
     start = strToDate(start);
     end = strToDate(end);
     const b = start.getDate()*(start.getMonth() + 1);
-    const f = start.getDate()*(start.getMonth() + 1);
+    const f = end.getDate()*(end.getMonth() + 1);
     return (f - b);
 }
 
@@ -52,7 +82,6 @@ function getDuration(start, end, toMs = false) {
  * @param {string} deps
  */
 function makeRow(name, start, end, percentage = 0, duration = null, deps = null) {
-
     if (!duration) duration = getDuration(start, end);
     const id = generateUUID();
     return {raw: [
@@ -66,7 +95,38 @@ function makeRow(name, start, end, percentage = 0, duration = null, deps = null)
     ], id};
 }
 
+function drawTable(rows) {
+    const c = document.getElementById('c_table');
+    let interpolate = `
+        <table border="1">
+            <tr>
+            <td>Task ID</td>
+            <td>Task Name</td>
+            <td>Start date</td>
+            <td>End date</td>
+            <td>Duration (ms)</td>
+            <td>Percentage</td>
+</tr>
+    `;
+    rows.forEach((r) => {
+        interpolate += `
+            <tr>
+            <td>${r[0].slice(0, 5)}</td>
+            <td>${r[1]}</td>
+            <td>${r[2].toLocaleDateString()}</td>
+            <td>${r[3].toLocaleDateString()}</td>
+            <td>${r[4]}</td>
+            <td>${r[5]}</td>
+            </tr>
+        `;
+    })
+    interpolate += '</table>';
+
+    c.innerHTML = interpolate;
+}
+
 function drawChart() {
+    console.log(Papa.parse)
     const data = new google.visualization.DataTable();
 
     data.addColumn('string', 'Task ID');
@@ -77,9 +137,8 @@ function drawChart() {
     data.addColumn('number', 'Percent Complete');
     data.addColumn('string', 'Dependencies');
 
-    const __rows = [        makeRow('Preparing/discussing requirements',
-        '20.02.2022',
-        '23.02.2022', 100),
+    const __rows = [
+        makeRow('Preparing/discussing requirements', '20.02.2022', '23.02.2022', 100),
         makeRow('Approving requirements', '23.02.2022', '26.02.2022', 100),
         makeRow('Onboarding/discussing design', '26.02.2022', '28.02.2022', 100),
         makeRow('Design phase', '01.03.2022', '16.03.2022', 100),
@@ -92,7 +151,7 @@ function drawChart() {
         i.raw[i.raw.length - 1] = arr[idx - 1].id;
         return i.raw;
     });
-    console.log(__rows);
+    drawTable(__rows);
 
     data.addRows(__rows);
 

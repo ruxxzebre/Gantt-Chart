@@ -7,10 +7,27 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Gantt Chart by ruxxzebre</title>
 <!--    https://www.gstatic.com/charts/loader.js-->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+    <script type="text/javascript" src="./vendors/papaparse.js"></script>
     <script type="text/javascript" src="./vendors/loader.js"></script>
     <script type="text/javascript" src="./script.js"></script>
+    <style>
+        .ic {
+            display: inline-block;
+            box-sizing: content-box;
+            border: 1px solid black;
+            padding: 50px;
+            margin-bottom: 50px;
+        }
+    </style>
 </head>
 <body>
+<!--    <div class="ic">-->
+<!--        <h2>Додайте csv</h2>-->
+<!--        <input type="file" name="inputfile"-->
+<!--               id="inputfile">-->
+<!--    </div>-->
+    <div id="c_table"></div>
     <div id="chart_div"></div>
 </body>
 </html>
