@@ -1,0 +1,16 @@
+{
+  "name": "Gantt-Chart",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "https://github.com/ruxxzebre/Gantt-Chart",
+  "author": "ruxxzebre <paullaboratory@gmail.com>",
+  "source": "src/index.html",
+  "scripts": {
+    "start": "parcel",
+    "build": "parcel build"
+  },
+  "license": "MIT",
+  "dependencies": {
+    "parcel": "^2.4.0"
+  }
+}

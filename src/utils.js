@@ -1,35 +1,3 @@
-// $("#inputfile").on('change', () => {
-//     $("#inputfile").parse({
-//         config: {
-//             header: true,
-//             encoding: 'utf-8',
-//             complete: function (...args) {
-//                 console.log(args);
-//             }
-//         },
-//         before: function(file, inputElem)
-//         {
-//             // executed before parsing each file begins;
-//             // what you return here controls the flow
-//             console.log(file);
-//         },
-//         error: function(err, file, inputElem, reason)
-//         {
-//             console.log("ERROR");
-//             console.log(err);
-//             // executed if an error occurs while loading the file,
-//             // or if before callback aborted for some reason
-//         },
-//         complete: function()
-//         {
-//             console.log("DONE");
-//             // executed after all files are complete
-//         }
-//     });
-// });
-
-google.charts.load('current', {'packages':['gantt']});
-google.charts.setOnLoadCallback(drawChart);
 
 function daysToMilliseconds(days) {
     return days * 24 * 60 * 60 * 1000;
@@ -85,14 +53,14 @@ function makeRow(name, start, end, percentage = 0, duration = null, deps = null)
     if (!duration) duration = getDuration(start, end);
     const id = generateUUID();
     return {raw: [
-        id,
-        name,
-        strToDate(start),
-        strToDate(end),
-        daysToMilliseconds(duration),
-        percentage,
-        deps,
-    ], id};
+            id,
+            name,
+            strToDate(start),
+            strToDate(end),
+            daysToMilliseconds(duration),
+            percentage,
+            deps,
+        ], id};
 }
 
 function drawTable(rows) {
